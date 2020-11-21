@@ -16,8 +16,7 @@ export class createProducts1605989383615 implements MigrationInterface {
 				},
 				{
 					name: 'name',
-					type: 'varchar',
-					isUnique: true
+					type: 'varchar'
 				},
 				{
 					name: 'count',
