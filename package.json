@@ -1,0 +1,20 @@
+{
+  "name": "icase-data-api",
+  "version": "1.0.0",
+  "description": "API para gerenciamento das mercadorias internas da iCase.",
+  "main": "dist/index.js",
+  "repository": "https://github.com/castrorry/icase-data-api.git",
+  "author": "Rayan de Castro",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/express": "^4.17.9",
+    "@types/node": "^14.14.9",
+    "ts-node-dev": "^1.0.0",
+    "typescript": "^4.1.2"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "sqlite3": "^5.0.0",
+    "typeorm": "^0.2.29"
+  }
+}
