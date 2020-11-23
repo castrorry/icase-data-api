@@ -36,7 +36,7 @@ export default {
   },
   show: async (request: Request, response: Response) => {
     try {
-      const {id: device_id} = request.params;
+      const { id: device_id } = request.params;
 
       const deviceRepository = getRepository(Device);
       const device = await deviceRepository.findOneOrFail(device_id);
