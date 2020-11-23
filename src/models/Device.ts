@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { DeviceBrand } from "./DeviceBrand";
 
 @Entity('devices')
 export class Device {
@@ -9,10 +10,10 @@ export class Device {
   name!: string;
 
   @Column()
-  model!: string;
+  brand_id!: number;
 
   @Column()
-  brand!: string;
+  model!: string;
 
   @Column()
   year!: string;
@@ -22,4 +23,8 @@ export class Device {
 
   @UpdateDateColumn()
   updated_at!: Date;
+
+  @ManyToOne(() => DeviceBrand, (device_brand) => device_brand.devices)
+  @JoinColumn({name: 'brand_id'})
+  brand!: DeviceBrand;
 }

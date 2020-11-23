@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import { IDeviceDTO } from "../interfaces/device";
 import { Device } from "../models/Device";
+import { DeviceBrand } from "../models/DeviceBrand";
 
 export default {
   create: async (request: Request, response: Response) => {
@@ -13,9 +14,19 @@ export default {
         year
       }: IDeviceDTO = request.body;
 
+      const brandRepository = getRepository(DeviceBrand);
+      let [deviceBrand] = await brandRepository.find({
+        where: { name: brand.toLowerCase() }
+      });
+
+      if (!deviceBrand) {
+        const newBrand = brandRepository.create({ name: brand });
+        deviceBrand = await brandRepository.save(newBrand);
+      }
+
       const deviceRepository = getRepository(Device);
       const device = deviceRepository.create({
-        name, model, brand, year
+        name, model: model.toUpperCase(), brand_id: deviceBrand.id, year
       });
       const deviceStored = await deviceRepository.save(device);
 
@@ -27,7 +38,9 @@ export default {
   index: async (request: Request, response: Response) => {
     try {
       const deviceRepository = getRepository(Device);
-      const devices = await deviceRepository.find();
+      const devices = await deviceRepository.find({
+        relations: ['brand']
+      });
 
       return response.status(200).json(devices);
     } catch ({ message }) {
@@ -39,7 +52,9 @@ export default {
       const { id: device_id } = request.params;
 
       const deviceRepository = getRepository(Device);
-      const device = await deviceRepository.findOneOrFail(device_id);
+      const device = await deviceRepository.findOneOrFail(device_id, {
+        relations: ['brand']
+      });
 
       return response.status(200).json(device);
     } catch ({ message }) {
