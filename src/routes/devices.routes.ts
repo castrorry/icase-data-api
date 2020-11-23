@@ -1,9 +1,10 @@
 import { Router } from "express";
+import devicesController from "../controllers/devices.controller";
 
 const deviceRoutes = Router();
 
-deviceRoutes.get('/', (request, response) =>
-  response.json({ message: 'This is devices route.' })
-);
+deviceRoutes.post('/', devicesController.create);
+deviceRoutes.get('/', devicesController.index);
+deviceRoutes.get('/:id', devicesController.show);
 
 export { deviceRoutes }
