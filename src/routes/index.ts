@@ -8,7 +8,7 @@ Routes.use('/devices', deviceRoutes);
 
 Routes.get('/', (request, response) => {
   return response.json({
-    message: 'Olá'
+    ok: true
   });
 });
 
