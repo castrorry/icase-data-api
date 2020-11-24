@@ -60,5 +60,17 @@ export default {
     } catch ({ message }) {
       return response.status(400).json({ message })
     }
+  },
+  delete: async (request: Request, response: Response) => {
+    try {
+      const { id: device_id } = request.params;
+
+      const deviceRepository = getRepository(Device);
+      const deviceDeleted = await deviceRepository.delete(device_id);
+
+      return response.status(200).json(deviceDeleted);
+    } catch ({ message }) {
+      return response.status(400).json({ message })
+    }
   }
 }

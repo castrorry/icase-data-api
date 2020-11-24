@@ -6,5 +6,6 @@ const deviceRoutes = Router();
 deviceRoutes.post('/', devicesController.create);
 deviceRoutes.get('/', devicesController.index);
 deviceRoutes.get('/:id', devicesController.show);
+deviceRoutes.delete('/:id', devicesController.delete);
 
 export { deviceRoutes }
