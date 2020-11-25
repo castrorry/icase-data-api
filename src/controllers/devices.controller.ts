@@ -9,9 +9,7 @@ export default {
     try {
       const {
         name,
-        model,
-        brand,
-        year
+        brand
       }: IDeviceDTO = request.body;
 
       const brandRepository = getRepository(DeviceBrand);
@@ -26,7 +24,7 @@ export default {
 
       const deviceRepository = getRepository(Device);
       const device = deviceRepository.create({
-        name, model: model.toUpperCase(), brand_id: deviceBrand.id, year
+        name, brand_id: deviceBrand.id
       });
       const deviceStored = await deviceRepository.save(device);
 
@@ -44,7 +42,7 @@ export default {
 
       return response.status(200).json(devices);
     } catch ({ message }) {
-      return response.status(400).json({ message })
+      return response.status(400).json({ message });
     }
   },
   show: async (request: Request, response: Response) => {
@@ -58,7 +56,7 @@ export default {
 
       return response.status(200).json(device);
     } catch ({ message }) {
-      return response.status(400).json({ message })
+      return response.status(400).json({ message });
     }
   },
   delete: async (request: Request, response: Response) => {
@@ -70,7 +68,7 @@ export default {
 
       return response.status(200).json(deviceDeleted);
     } catch ({ message }) {
-      return response.status(400).json({ message })
+      return response.status(400).json({ message });
     }
   }
 }

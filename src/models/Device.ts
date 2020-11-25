@@ -12,12 +12,6 @@ export class Device {
   @Column()
   brand_id!: number;
 
-  @Column()
-  model!: string;
-
-  @Column()
-  year!: string;
-
   @CreateDateColumn()
   created_at!: Date;
 
