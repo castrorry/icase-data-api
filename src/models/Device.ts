@@ -12,6 +12,9 @@ export class Device {
   @Column()
   brand_id!: number;
 
+  @Column()
+  launched!: boolean;
+
   @CreateDateColumn()
   created_at!: Date;
 

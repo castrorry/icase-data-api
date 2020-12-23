@@ -9,7 +9,8 @@ export default {
     try {
       const {
         name,
-        brand
+        brand,
+        launched
       }: IDeviceDTO = request.body;
 
       const brandRepository = getRepository(DeviceBrand);
@@ -24,7 +25,7 @@ export default {
 
       const deviceRepository = getRepository(Device);
       const device = deviceRepository.create({
-        name, brand_id: deviceBrand.id
+        name, brand_id: deviceBrand.id, launched
       });
       const deviceStored = await deviceRepository.save(device);
 
