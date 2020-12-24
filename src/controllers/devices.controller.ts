@@ -19,7 +19,7 @@ export default {
       });
 
       if (!deviceBrand) {
-        const newBrand = brandRepository.create({ name: brand });
+        const newBrand = brandRepository.create({ name: brand.toLowerCase() });
         deviceBrand = await brandRepository.save(newBrand);
       }
 
@@ -59,6 +59,30 @@ export default {
     } catch ({ message }) {
       return response.status(400).json({ message });
     }
+  },
+  update: async (request: Request, response: Response) => {
+      const deviceDTO: IDeviceDTO = request.body;
+      const { id: device_id } = request.params;
+
+      const deviceRepository = getRepository(Device);
+
+      const brandRepository = getRepository(DeviceBrand);
+      let [deviceBrand] = deviceDTO.brand != undefined ? await brandRepository.find({
+        where: { name: deviceDTO.brand.toLowerCase() }
+      }) : [undefined];
+
+      if (!deviceBrand && deviceDTO.brand != undefined) {
+        const newBrand = brandRepository.create({ name: deviceDTO.brand.toLowerCase() });
+        deviceBrand = await brandRepository.save(newBrand);
+      }
+      
+      const deviceStored = await deviceRepository.save({
+        ...(await deviceRepository.findOneOrFail(device_id)),
+        ...deviceDTO,
+        brand: deviceBrand
+      });
+
+      return response.status(201).json(deviceStored);
   },
   delete: async (request: Request, response: Response) => {
     try {
