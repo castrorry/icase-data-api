@@ -25,7 +25,7 @@ export default {
 
       const deviceRepository = getRepository(Device);
       const device = deviceRepository.create({
-        name, brand_id: deviceBrand.id, launched
+        name, launched, brand: deviceBrand
       });
       const deviceStored = await deviceRepository.save(device);
 
@@ -61,6 +61,7 @@ export default {
     }
   },
   update: async (request: Request, response: Response) => {
+    try {
       const deviceDTO: IDeviceDTO = request.body;
       const { id: device_id } = request.params;
 
@@ -83,6 +84,9 @@ export default {
       });
 
       return response.status(201).json(deviceStored);
+    } catch ({ message }) {
+      return response.status(400).json({ message });
+    }
   },
   delete: async (request: Request, response: Response) => {
     try {
