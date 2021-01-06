@@ -28,7 +28,7 @@ export default {
   },
   show: async (request: Request, response: Response) => {
     try {
-      const {id: category_id} = request.params;
+      const { id: category_id } = request.params;
 
       const categoryRepository = getRepository(Category);
       const category = await categoryRepository.findOneOrFail(category_id);
@@ -41,22 +41,22 @@ export default {
   update: async (request: Request, response: Response) => {
     try {
       const { name } = request.body;
-      const {id: category_id} = request.params;
+      const { id: category_id } = request.params;
 
       const categoryRepository = getRepository(Category);
-      const categoryStored = await categoryRepository.save({
+      const categoryUpdated = await categoryRepository.save({
         ...await categoryRepository.findOneOrFail(category_id),
         name
       });
 
-      return response.status(201).json(categoryStored);
+      return response.status(201).json(categoryUpdated);
     } catch ({ message }) {
       return response.status(400).json({ message });
     }
   },
   delete: async (request: Request, response: Response) => {
     try {
-      const {id: category_id} = request.params;
+      const { id: category_id } = request.params;
 
       const categoryRepository = getRepository(Category);
       const categoryDeleted = await categoryRepository.delete(category_id);

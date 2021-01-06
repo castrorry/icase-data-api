@@ -77,13 +77,13 @@ export default {
         deviceBrand = await brandRepository.save(newBrand);
       }
       
-      const deviceStored = await deviceRepository.save({
+      const deviceUpdated = await deviceRepository.save({
         ...(await deviceRepository.findOneOrFail(device_id)),
         ...deviceDTO,
         brand: deviceBrand
       });
 
-      return response.status(201).json(deviceStored);
+      return response.status(201).json(deviceUpdated);
     } catch ({ message }) {
       return response.status(400).json({ message });
     }
